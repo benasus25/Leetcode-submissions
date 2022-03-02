@@ -15,11 +15,22 @@ public:
     if(root==NULL){
         return new TreeNode(val);
     }
-    if(val>root->val){
-        root->right =insertIntoBST(root->right,val);
+    TreeNode* prev= root, *curr = root;
+    while(curr){
+        if(val>curr->val){
+            prev = curr;
+            curr = curr->right;
+        }
+        else{
+            prev = curr;
+            curr = curr ->left;
+        }
+    }
+    if(val>prev->val){
+        prev->right = new TreeNode(val);
     }
     else{
-        root->left = insertIntoBST(root->left,val);
+        prev->left = new TreeNode(val);
     }
     return root;
     }
