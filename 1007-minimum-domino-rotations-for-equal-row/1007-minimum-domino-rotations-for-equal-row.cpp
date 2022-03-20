@@ -1,17 +1,17 @@
 class Solution {
 public:
     int minDominoRotations(vector<int>& tops, vector<int>& bottoms) {
-    unordered_map<int,int>mp;
+    vector<int>mp(7,0);
     for(int i=0;i<tops.size();i++){
         mp[tops[i]]++;
         mp[bottoms[i]]++;
     }
     int maxi = INT_MIN;
     int maxn = INT_MIN;
-    for(auto u:mp){
-        if(u.second>maxi){
-            maxi = u.second;
-            maxn = u.first;
+    for(int i=1;i<7;i++){
+        if(mp[i]>maxi){
+            maxi = mp[i];
+            maxn = i;
         }
     }
     int count =0,cnt =0;
