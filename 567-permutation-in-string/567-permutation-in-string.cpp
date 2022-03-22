@@ -1,35 +1,38 @@
 class Solution {
 public:
-    bool checkInclusion(string s1, string s2) {
-      vector<int> s1hash(26,0);
-      vector<int> s2hash(26,0);    
-        
-        int left=0, right=0;
-        if(s1.size()>s2.size())
-            return false;
-        while(right<s1.size()){
-            s1hash[s1[right]-'a']+=1;
-            s2hash[s2[right]-'a']+=1;
-            right+=1;  
+    bool check(string s, string r, int i, int j){
+        set<char>st;
+        for(int i=0;i<s.length();i++){
+            st.insert(s[i]);
         }
+        for(int k=i;k<=j;k++){
+            st.erase(r[k]);
+        }
+        return st.size()==0?1:0;
+    }
     
-        right-=1;
-        while(right<s2.size()){
-            if(s1hash==s2hash)
-              return true;
-              right+=1;
-            cout<<endl;
-            if(right!=s2.size())
-                 s2hash[s2[right]-'a']+=1;
-                 s2hash[s2[left]-'a']-=1;
-            left+=1;
-           
-            
+    bool checkInclusion(string s1, string s2) {
+    int n =s1.length();
+    int m = s2.length();
+    if(n>m)return false;
+    int hash =0,sum=0,i=0;
+    for(;i<n;i++){
+        hash += s1[i]-'a'+1;
+        sum += s2[i]-'a'+1;
+    }
+    cout<<"Initial hash and sum is "<<hash<<" "<<sum<<endl;
+    int start =0;
+    while(i<=m){
+        if(sum==hash){
+            if(check(s1,s2,start,i))return true;
         }
-      
-        
-        return false;
-        
-        
+        if(i==m)return false;
+        sum+=s2[i]-'a'+1;
+        sum-=s2[start]-'a'+1;
+        cout<<start<<" "<<i<<" "<<sum<<endl;        
+        start++;
+        i++;
+    }
+    return false;
     }
 };
