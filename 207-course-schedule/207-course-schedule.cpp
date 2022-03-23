@@ -1,27 +1,26 @@
 class Solution {
 public:
-    bool canFinish(int n, vector<vector<int>>& prerequisites) {
-    vector<vector<int>>graph(n,vector<int>());
-    vector<int>inorder(n,0);
-    for(int i=0;i<prerequisites.size();i++){
-        graph[prerequisites[i][1]].push_back(prerequisites[i][0]);
-        inorder[prerequisites[i][0]]++;
-    }
-    queue<int>q;
-    for(int i=0;i<n;i++){
-        if(!inorder[i])q.push(i);
-    }
-    int cnt=0;
-    while(!q.empty()){
-        int num = q.front();
-        for(auto u:graph[num]){
-            inorder[u]--;
-            if(inorder[u]==0)q.push(u);
+    
+    bool iscyle(vector<vector<int>>&graph, vector<int>&vis, int i){
+        if(vis[i]==1)return true;
+        if(vis[i]==0){
+        vis[i]=1;
+        for(auto e:graph[i]){
+            if(iscyle(graph,vis,e))return true;
+            }
         }
-        cnt++;
-        q.pop();
-    }
-    if(cnt==n)return true;
+        vis[i]=2;
         return false;
+    }
+    bool canFinish(int n, vector<vector<int>>& pre) {
+    vector<vector<int>>graph(n);
+    vector<int>vis(n,0);
+    for(auto edge : pre){
+        graph[edge[1]].push_back(edge[0]);
+    }
+    for(int i=0;i<n;i++){
+        if(iscyle(graph, vis,i))return false;
+    }    
+    return true;
     }
 };
