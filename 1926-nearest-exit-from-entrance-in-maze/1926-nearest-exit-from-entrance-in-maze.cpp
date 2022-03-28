@@ -9,7 +9,8 @@ public:
     while(q.size()){
         int len = q.size();
         while(len--){
-            auto [i,j]= q.front();
+            int i = q.front().first;
+            int j = q.front().second;
             q.pop();
             for(int k=0;k<4;k++){
                 int x = i+dir[k][0];
