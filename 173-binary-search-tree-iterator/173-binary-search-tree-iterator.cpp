@@ -10,33 +10,27 @@
  * };
  */
 class BSTIterator {
-    
-    vector<int>res;
-    void inorder(TreeNode* root){
-        if(!root)return;
-        inorder(root->left);
-        res.push_back(root->val);
-        inorder(root->right);
-    }
-    int curr=0;
-    
 public:
+    stack<TreeNode*> s;
     BSTIterator(TreeNode* root) {
-        inorder(root);
+        partialInorder(root);
+    }
+    
+    void partialInorder(TreeNode* root){
+        while(root != NULL){
+            s.push(root);
+            root = root->left;
+        }
     }
     
     int next() {
-        return res[curr++];
+        TreeNode* top = s.top();
+        s.pop();
+        partialInorder(top->right);
+        return top->val;
     }
     
     bool hasNext() {
-        return curr!=res.size();
+        return !s.empty();
     }
 };
-
-/**
- * Your BSTIterator object will be instantiated and called as such:
- * BSTIterator* obj = new BSTIterator(root);
- * int param_1 = obj->next();
- * bool param_2 = obj->hasNext();
- */
