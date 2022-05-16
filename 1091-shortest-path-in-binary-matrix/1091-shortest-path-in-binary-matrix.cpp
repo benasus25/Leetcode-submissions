@@ -18,7 +18,6 @@ public:
             auto ptr = q.front();
             q.pop();
             int row = ptr.first, col = ptr.second;
-            if(row==n-1&&col==m-1)return grid[row][col];
             for(int i=0;i<8;i++){
                 int x = row+dir[i].first;
                 int y = col+dir[i].second;
@@ -28,6 +27,6 @@ public:
                 }
             }
         }
-        return -1;
+        return grid[n-1][m-1]?grid[n-1][m-1]:-1;
     }
 };
