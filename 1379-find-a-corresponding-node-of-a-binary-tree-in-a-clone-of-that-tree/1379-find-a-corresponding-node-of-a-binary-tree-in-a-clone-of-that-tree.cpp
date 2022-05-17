@@ -10,11 +10,22 @@
 
 class Solution {
 public:
+    
+    TreeNode* ans;
+    
+    void helper(TreeNode* cloned, TreeNode* target){
+        if(cloned==NULL)return;
+        if(cloned->val==target->val){
+            ans = cloned;
+            return;
+        }
+        helper(cloned->left,target);
+        helper(cloned->right,target);
+    }
+    
     TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
         if(cloned==NULL)return NULL;
-        if(original == target) return cloned;
-        TreeNode* temp = getTargetCopy(original->left, cloned->left, target);
-        if(temp)return temp;
-        return getTargetCopy(original->right, cloned->right, target);
+        helper(cloned,target);
+        return ans;
     }
 };
