@@ -8,16 +8,13 @@ public:
             if(sum==target)res.push_back(ans);
             return;
         }
-       // 
-        //if(sum>target)return;
-        helper(candidates,i+1,sum,ans,target);
+        if(sum>target)return;
         if(sum + candidates[i] <= target){
             ans.push_back(candidates[i]);
             helper(candidates,i,sum+candidates[i],ans,target);
             ans.pop_back();
         }
-
-        
+        helper(candidates,i+1,sum,ans,target);
     }
     
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
