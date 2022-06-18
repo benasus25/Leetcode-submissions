@@ -1,30 +1,72 @@
-class WordFilter {
-   private:
-    unordered_map<string, int> hashMap;
-
-   public:
-    WordFilter(vector<string>& words) {
-        int n = words.size();
-        for (int i = 0; i < n; i++) {
-            string word = words[i];
-            int wordSize = word.size();
-            for (int j = 1; j <= wordSize; j++) {
-                string p = word.substr(0, j);
-                for (int k = 0; k < wordSize; k++) {
-                    string s = word.substr(k, wordSize);
-                    hashMap[p + "|" + s] = i + 1;
-                }
-            }
-        }
+struct Node {
+    Node* arr[27];
+    int index = -1;
+    
+    bool contains(char ch) {
+        return arr[ch-'a'] != NULL;
     }
-
-    int f(string prefix, string suffix) {
-        string s = prefix + "|" + suffix;
-        return hashMap[s] - 1;
+    
+    void put(char ch, Node* newNode) {
+        arr[ch-'a'] = newNode;
+    }
+    
+    Node* getNext(char ch) {
+        return arr[ch-'a'];
+    }
+    
+    void setIndex(int idx) {
+        index = idx;
+    }
+    
+    int getIndex() {
+        return index;
     }
 };
-/**
- * Your WordFilter object will be instantiated and called as such:
- * WordFilter* obj = new WordFilter(words);
- * int param_1 = obj->f(prefix,suffix);
- */
+
+class WordFilter {
+    Node* trie;
+public:
+    
+    void insert(Node* root, string& s, int idx) {
+        for(auto& ch : s) {
+            if(!root->contains(ch)) {
+                root->put(ch, new Node());
+            }
+            root = root->getNext(ch);
+            root->setIndex(idx);
+        }
+    }
+    
+    WordFilter(vector<string>& words) {
+        trie = new Node();
+        
+        int idx = 0;
+        string s = "";
+        
+        for(auto& word : words) {
+            s = "{" + word;
+            insert(trie, s, idx);
+            
+            for(int i=word.size()-1; i>=0; i--) {
+                s = word[i] + s;
+                insert(trie, s, idx);
+            }
+            
+            idx++;
+        }
+    }
+    
+    int f(string prefix, string suffix) {
+        
+        Node* temp = trie;
+        
+        string match = suffix + "{" + prefix;
+        
+        for(auto& ch : match) {
+            if(!temp || !temp->contains(ch)) return -1;
+            temp = temp->getNext(ch);
+        }
+        
+        return temp->getIndex();
+    }
+};
