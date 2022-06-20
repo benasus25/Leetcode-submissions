@@ -1,28 +1,37 @@
-struct TrieNode {
-    TrieNode *branch[26];
-    bool isEmpty = true;
+struct Trie{
+    Trie* children[26];
+    bool isEnd = true;
 };
 
+
+
 class Solution {
-public:
-    int minimumLengthEncoding(vector<string>& W) {
-        TrieNode *trie = new TrieNode();
-        int ans = 1;
-        for (string word : W) {
-            TrieNode *curr = trie;
-            bool newWord = false;
-            for (int i = word.size() - 1; i >= 0; i--) {
-                int c = word[i] - 97;
-                if (curr->isEmpty && !newWord) ans -= word.size() - i;
-                if (!curr->branch[c]) {
-                    newWord = true;
-                    curr->branch[c] = new TrieNode();
-                    curr->isEmpty = false;
-                }
-                curr = curr->branch[c];
+private:
+    Trie *temp = new Trie();
+    bool checknewword(string s){
+        bool res = false;
+        Trie *curr = temp;
+        for (int i=s.length()-1;i>=0;i--){
+            int c = s[i]-'a';
+            if(!curr->children[c]){
+                res = true;
+                curr->children[c] = new Trie();
             }
-            if (newWord) ans += word.size() + 1;
+            curr = curr->children[c];
         }
-        return ans;
+        return res;
+    }
+
+public:
+    int minimumLengthEncoding(vector<string>& words) {
+        int res = 0;
+        sort(words.begin(),words.end(), [](string a, string b){return b.size()<a.size();});
+        for(int i =0;i<words.size();i++){
+            cout<<words[i]<<endl;
+            if(checknewword(words[i])){
+                res += words[i].size()+1;
+            }
+        }
+        return res;
     }
 };
