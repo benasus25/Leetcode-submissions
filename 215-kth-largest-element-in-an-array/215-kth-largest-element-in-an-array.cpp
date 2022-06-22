@@ -5,11 +5,9 @@ public:
         for(auto u:nums){
             pq.push(u);
         }
-        int num = pq.top();
-        while(k--){
-            num = pq.top();
+        while(k-->1){
             pq.pop();
         }
-        return num;
+        return pq.top();
     }
 };
