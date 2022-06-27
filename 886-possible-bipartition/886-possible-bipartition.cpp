@@ -21,8 +21,9 @@ public:
         vector<int>col(n,0);
         queue<int>q;
         for(int i=0;i<n;i++){
+            if(col[i]!=0)continue;
             q.push(i);
-            if(col[i]==0)col[i]=1;
+            col[i]=1;
             while(!q.empty()){
                 int top = q.front();
                 q.pop();
