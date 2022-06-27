@@ -19,10 +19,21 @@ public:
             graph[u[1]-1].push_back(u[0]-1);
         }
         vector<int>col(n,0);
-        //0 -> not visited, 1 -> black, -1 ->red;
+        queue<int>q;
         for(int i=0;i<n;i++){
-            if(col[i]==0){
-                if(!helper(graph,col,i,1))return false;
+            q.push(i);
+            if(col[i]==0)col[i]=1;
+            while(!q.empty()){
+                int top = q.front();
+                q.pop();
+                int c = col[top];
+                for(auto u:graph[top]){
+                    if(col[u]==c)return false;
+                    if(col[u]==0){
+                        q.push(u);
+                        col[u]=-c;
+                    }
+                }
             }
         }
         return true;
