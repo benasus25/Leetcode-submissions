@@ -1,16 +1,11 @@
 class Solution {
 public:
-    int jump(vector<int>& nums) {
-    int n = nums.size();
-    vector<int>res(n,INT_MAX);
-    res[0]=0;
-    for(int i=0;i<n;i++){
-        for(int j=1;j<=nums[i];j++){
-            if(i+j<n){
-                res[i+j]= min(res[i]+1,res[i+j]);
-            }
-        }
-    }
-    return res[n-1];
+    int jump(vector<int>& N) {
+        int len = N.size() - 1, curr = -1, next = 0, ans = 0;
+        for (int i = 0; next < len; i++) {
+            if (i > curr) ans++, curr = next;
+            next = max(next, N[i] + i);
+        };
+        return ans;
     }
 };
