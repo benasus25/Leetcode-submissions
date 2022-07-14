@@ -1,21 +1,20 @@
 class Solution {
 public:
-    TreeNode* solve(int start_pre, int start_in, int end_in, vector<int>& preorder, vector<int>& inorder) 
-    {
-        
-        if(start_in > end_in || start_pre > preorder.size()-1) return NULL;
-        
-        TreeNode* root = new TreeNode(preorder[start_pre]);
-        
-        int index = 0;
-        for(int i = start_in; i <= end_in; i++)
-            if(root->val == inorder[i]) index = i;
-            
-        root->left = solve(start_pre+1, start_in, index-1, preorder, inorder);
-        root->right = solve(start_pre+index-start_in+1, index+1, end_in, preorder, inorder);
-        return root;
+    TreeNode* buildTree(vector<int>& P, vector<int>& I) {
+        unordered_map<int, int> M;
+        for (int i = 0; i < I.size(); i++)
+            M[I[i]] = i;
+        return splitTree(P, M, 0, 0, I.size()-1);
     }
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-       return solve(0, 0, inorder.size()-1, preorder, inorder);
+    
+private:
+    TreeNode* splitTree(vector<int>& P, unordered_map<int, int>& M, int pix, int ileft, int iright) {
+        int rval = P[pix], imid = M[rval];
+        TreeNode* root = new TreeNode(rval);            
+        if (imid > ileft)
+            root->left = splitTree(P, M, pix+1, ileft, imid-1);
+        if (imid < iright)
+            root->right = splitTree(P, M, pix+imid-ileft+1, imid+1, iright);
+        return root;
     }
 };
