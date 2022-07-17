@@ -1,6 +1,6 @@
+int dp[1001][1001] = { 1 };
 class Solution {
 public:
-    int dp[1001][1001] = { 1 };
     int kInversePairs(int n, int k) {
         if (dp[n][k])
             return dp[n][k];
