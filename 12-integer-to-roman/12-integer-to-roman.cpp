@@ -1,4 +1,6 @@
-const vector<pair<int,string>>sol = {{1000, "M"},
+class Solution {
+private:
+    const vector<pair<int,string>>sol = {{1000, "M"},
                                             {900, "CM"},
                                             {500, "D"},
                                             {400, "CD"},
@@ -11,8 +13,7 @@ const vector<pair<int,string>>sol = {{1000, "M"},
                                             {5, "V"},
                                             {4, "IV"},
                                             {1, "I"}};
-
-class Solution {
+    
 public:
     string intToRoman(int num) {
         string ans ="";
