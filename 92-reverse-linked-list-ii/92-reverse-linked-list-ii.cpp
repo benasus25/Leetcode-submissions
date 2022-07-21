@@ -13,12 +13,13 @@ public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
         int run = 1;
         ListNode* temp = NULL, *curr = head;
-        while(run++<left){
+        while(run<left){
             temp = curr;
             curr = curr->next;
+            run++;
         }
         ListNode*temp1 = curr, *prev = NULL, *next = curr->next;
-        while(run<=right+1){
+        while(run<=right){
             next = curr->next;
             curr->next = prev;
             prev = curr;
