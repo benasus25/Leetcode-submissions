@@ -1,38 +1,34 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
-        ListNode* curr = head;
-        ListNode* prev = NULL;
-        int cnt = 0;
-        
-        while(curr != NULL){
-            cnt++;
-            if(cnt == left){
-                
-                ListNode* inner_curr = curr;
-                ListNode* inner_prev = NULL;
-                
-                while(cnt <= right){
-                    ListNode* nextptr = inner_curr->next;
-                    inner_curr->next = inner_prev;
-                    inner_prev = inner_curr;
-                    inner_curr = nextptr;
-                    cnt++;
-                }
-                
-                if(prev != NULL){
-                    prev->next = inner_prev;
-                }
-                else{
-                    head = inner_prev;
-                }
-                curr->next = inner_curr;
-                
-                break;
-            }
-            prev = curr;
+        int run = 1;
+        ListNode* temp = NULL, *curr = head;
+        while(run++<left){
+            temp = curr;
             curr = curr->next;
         }
+        ListNode*temp1 = curr, *prev = NULL, *next = curr->next;
+        while(run<=right+1){
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            run++;
+        }
+        //cout<<curr->val<<"  "<<prev->val<<endl;
+        if(left!=1)temp->next= prev;
+        else head = prev;
+        temp1->next = curr;
         return head;
     }
 };
