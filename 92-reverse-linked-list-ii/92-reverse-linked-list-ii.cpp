@@ -18,9 +18,9 @@ public:
             curr = curr->next;
             run++;
         }
-        ListNode*temp1 = curr, *prev = NULL, *next = curr->next;
+        ListNode*temp1 = curr, *prev = NULL;
         while(run<=right){
-            next = curr->next;
+            ListNode* next = curr->next;
             curr->next = prev;
             prev = curr;
             curr = next;
