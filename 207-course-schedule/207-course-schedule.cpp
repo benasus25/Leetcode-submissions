@@ -1,29 +1,27 @@
 class Solution {
 public:
     
-    bool dfs(vector<vector<int>>&graph, int i, vector<int>&vis){
-        if(vis[i]==1)return true;
-        if(vis[i]==0){
-            vis[i]=1;
-            for(auto &u:graph[i]){
-                if(dfs(graph,u,vis))return true;
-            }
-        }
-        vis[i]=2;
-        return false;
-    }
-    
-    bool canFinish(int numCourses, vector<vector<int>>& pre) {
-        vector<vector<int>>graph(numCourses);
+    bool canFinish(int n, vector<vector<int>>& pre) {
+        vector<vector<int>>graph(n);
+        vector<int>inorder(n,0);
         for(int i=0;i<pre.size();i++){
             graph[pre[i][1]].push_back(pre[i][0]);
+            inorder[pre[i][0]]++;
         }
-        vector<int>vis(numCourses,0);
-        for(int i=0;i<numCourses;i++){
-            if(!vis[i]){
-                if(dfs(graph,i,vis))return false;
+        queue<int>q;
+        for(int i=0;i<n;i++){
+            if(!inorder[i])q.push(i);
+        }
+        while(!q.empty()){
+            int num = q.front();
+            for( auto &u:graph[num]){
+                inorder[u]--;
+                if(inorder[u]==0)q.push(u);
             }
+            n--;
+            q.pop();
         }
-        return true;
+        if(n==0)return true;
+        return false;
     }
 };
