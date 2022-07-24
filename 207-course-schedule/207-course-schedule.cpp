@@ -1,26 +1,29 @@
 class Solution {
 public:
     
-    bool iscyle(vector<vector<int>>&graph, vector<int>&vis, int i){
+    bool dfs(vector<vector<int>>&graph, int i, vector<int>&vis){
         if(vis[i]==1)return true;
         if(vis[i]==0){
-        vis[i]=1;
-        for(auto e:graph[i]){
-            if(iscyle(graph,vis,e))return true;
+            vis[i]=1;
+            for(auto &u:graph[i]){
+                if(dfs(graph,u,vis))return true;
             }
         }
         vis[i]=2;
         return false;
     }
-    bool canFinish(int n, vector<vector<int>>& pre) {
-    vector<vector<int>>graph(n);
-    vector<int>vis(n,0);
-    for(auto edge : pre){
-        graph[edge[1]].push_back(edge[0]);
-    }
-    for(int i=0;i<n;i++){
-        if(iscyle(graph, vis,i))return false;
-    }    
-    return true;
+    
+    bool canFinish(int numCourses, vector<vector<int>>& pre) {
+        vector<vector<int>>graph(numCourses);
+        for(int i=0;i<pre.size();i++){
+            graph[pre[i][1]].push_back(pre[i][0]);
+        }
+        vector<int>vis(numCourses,0);
+        for(int i=0;i<numCourses;i++){
+            if(!vis[i]){
+                if(dfs(graph,i,vis))return false;
+            }
+        }
+        return true;
     }
 };
