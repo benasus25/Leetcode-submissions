@@ -12,7 +12,7 @@ public:
     vector<int> shuffle() {
         vector<int>temp = original;
         for(int i=original.size()-1;i>=0;i--){
-            int r = rand()%(i+1);
+            int r = rand()%(original.size());
             swap(temp[i],temp[r]);
         }
         return temp;
