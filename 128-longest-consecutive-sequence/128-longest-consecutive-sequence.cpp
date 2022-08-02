@@ -7,8 +7,7 @@ public:
             if(s.count(u-1))continue;
             else{
                 count=1;
-                while(s.count(u+1)){
-                    u++;
+                while(s.count(u+count)){
                     count++;
                 }
                 ans = max(ans,count);
