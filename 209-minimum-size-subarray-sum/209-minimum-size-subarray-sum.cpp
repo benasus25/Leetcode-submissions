@@ -1,21 +1,14 @@
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) {
-        unordered_map<int,int>mp;
-        mp[0]=-1;
-        int n = nums.size(), i=0,j=0, len = INT_MAX,temp =0;
-        int sum = accumulate(nums.begin(),nums.end(),0);
-        if(sum<target)return 0;
-        if(sum==target)return n;
-        while(i<=j&&j<n){
-            while(j<n&&temp<target){
-                temp+=nums[j++];
-            }
-            while(i<=j&&temp>=target){
-                len = min(len,j-i);
-                temp-=nums[i++];
+        int n = nums.size(),i=0,j=0,sum=0,len = INT_MAX;
+        while(j<n){
+            sum+= nums[j++];
+            while(sum>=target){
+                len = min(len, j-i);
+                sum-=nums[i++];
             }
         }
-        return len;
+        return (len==INT_MAX)?0:len;
     }
 };
