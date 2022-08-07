@@ -10,15 +10,11 @@ public:
         while(i<=j&&j<n){
             while(j<n&&temp<target){
                 temp+=nums[j++];
-                cout<<j<<"  "<<temp<<endl;
             }
-            cout<<temp<<"End of j "<<endl;
             while(i<=j&&temp>=target){
                 len = min(len,j-i);
                 temp-=nums[i++];
-                cout<<i<<"  "<<temp<<endl;
             }
-            cout<<"End of i "<<temp<<endl;
         }
         return len;
     }
