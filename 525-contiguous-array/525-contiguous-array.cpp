@@ -6,7 +6,7 @@ public:
         mp[0] =-1;
         for(int i=0;i<nums.size();i++){
             sum += nums[i]==1 ?1:-1;
-            if(mp.count(sum)){
+            if(mp.find(sum)!=mp.end()){
                 len = max(len, i-mp[sum]);
             }
             else mp[sum] = i;
