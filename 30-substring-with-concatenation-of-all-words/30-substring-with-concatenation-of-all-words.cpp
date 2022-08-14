@@ -1,27 +1,37 @@
 class Solution {
 public:
-    
-    bool check(unordered_map<string,int>mp,string s, int len){
-        for(int i=0;i<s.length();i+=len){
-            string temp = s.substr(i,len);
-            if(mp.find(temp)!=mp.end()){
-                if(--mp[temp]==-1)return false;
-            }
-            else return false;
-        }
-        return true;
-    }
-    
     vector<int> findSubstring(string s, vector<string>& words) {
-        int n = words.size(), len = words[0].size(), size = len*n;
-        unordered_map<string,int>mp;
-        for(int i=0;i<n;i++){
-            mp[words[i]]++;
-        }
-        vector<int>res;
-        for(int i=0;i+size<=s.length();i++){
-            if(check(mp,s.substr(i,size),len)){
-                res.push_back(i);
+        int len = words[0].size(), n = words.size(), ssize = s.size(), left, found;
+        vector<int> res;
+        
+        unordered_map<string, int> freq, tmp;
+        for (auto word : words) freq[word]++;
+            
+        for (int i = 0; i < len; i++) {
+            tmp.clear();
+            left = i, found = 0;
+            
+            for (int j = i; j <= ssize - len; j += len) {
+                string curr = s.substr(j, len);
+                
+                if (freq.find(curr) != freq.end()) {
+                    tmp[curr]++;
+                    found++;
+
+                    while (freq[curr] < tmp[curr]) {
+                        tmp[s.substr(left, len)]--;
+                        found--;
+                        left += len;
+                    }
+
+                    if (found == n) res.push_back(left);
+                }
+                
+                else {
+                    tmp.clear();
+                    found = 0;
+                    left = j + len;
+                }
             }
         }
         return res;
