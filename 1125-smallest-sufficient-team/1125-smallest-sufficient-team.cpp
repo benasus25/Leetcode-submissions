@@ -47,7 +47,7 @@ void helper(int i,vector<int>&people_skill,int m,int mask,vector<int>&ans,vector
           int mask = 0;
           for(int j = 0; j < it.size(); ++j)
           {
-            if(mpp.count(it[j])) mask |= mpp[it[j]]; //if it[j] is a required skill then set that bit for that people's mask
+            mask |= mpp[it[j]]; //if it[j] is a required skill then set that bit for that people's mask
           }
           people_skill.push_back(mask); //store the mask 
         }
