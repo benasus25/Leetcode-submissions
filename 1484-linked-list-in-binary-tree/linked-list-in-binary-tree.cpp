@@ -3,8 +3,8 @@ public:
     bool isSubPath(ListNode* head, TreeNode* root) {
         return dfs(head, head, root);
     }
-    
-    bool dfs(ListNode* head, ListNode* cur, TreeNode* root) {
+
+        bool dfs(ListNode* head, ListNode* cur, TreeNode* root) {
         if (cur == nullptr) return true;  // Successfully matched the list
         if (root == nullptr) return false; // Reached the end of the tree without matching
         
@@ -18,4 +18,5 @@ public:
         
         return dfs(head, cur, root->left) || dfs(head, cur, root->right); // Recursively check left and right subtrees
     }
+
 };
