@@ -5,7 +5,7 @@ public:
         vector<int>prefix(n,0);
         for(int i=1;i<n;i++){
             prefix[i] = prefix[i-1];
-            if ((nums[i - 1] % 2 == 0 && nums[i] % 2 == 0) || (nums[i - 1] % 2 != 0 && nums[i] % 2 != 0)) {
+            if ((nums[i]^nums[i-1])%2==0) {
                 prefix[i]++;
             }
         }
